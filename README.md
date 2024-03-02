@@ -37,32 +37,6 @@ Welcome to **Ecommerce **! An innovative project that combines the powerful tech
 | Garanta a segurança dos endpoints dos microsserviços usando o Spring Security |        |
 
 
-
-## Working with MongoDB
-
-To get started you need to:
-* Install MongoDB Community Server: https://www.mongodb.com/try/download/community
-* After that, execute in a terminal: **`mongosh`**
-* With the server up and running, execute the following commands:
-
-```bash
-use ecommerce
-```
-
-
-### Basic MongoDB Commands
-
-|           **MongoDB Command**            | **Description**                                     |
-|:----------------------------------------:|:----------------------------------------------------|
-|      **`mongod`** or **`mongosh`**       | Starts mongoDB Server                               |
-|           **`show databases`**           | Show all the databases                              |
-|          **`use databaseName`**          | Select the Database                                 |
-|          **`show collections`**          | Show all the collections for the specific database  |
-|       **`db.collectName.drop()`**        | Drop the specified collection                       |
-| **`db.nomeCollection.countDocuments()`** | Count the documents given a collection              |
-|      **`db.nomeCollection.find()`**      | Shows all the documents of the specified collection |
-
-
 ## Challenges
 
 * Work with Spring Security;
