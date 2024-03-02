@@ -12,4 +12,4 @@ spring:
             ddl-auto: update
             show-sql: true
 
-api.security.token.secret: ${JWT_SECRET:batman batman batman}
+api.security.token.secret: ${JWT_SECRET:12345678}
