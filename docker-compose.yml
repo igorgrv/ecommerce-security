@@ -1,0 +1,25 @@
+# mvn clean install -DskipTests=true && podman-compose build --no-cache && podman-compose up
+# mvn clean install -DskipTests=true && docker-compose build --no-cache && docker-compose up
+version: '3'
+services:
+  mongo-ecommerce:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+  
+  ecommerce:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
