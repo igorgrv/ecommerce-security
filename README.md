@@ -45,7 +45,7 @@ Welcome to **Ecommerce **! An innovative project that combines the powerful tech
 ## Working with Posgress
 
 ```bash
-docker run --name ecommerce -e POSTGRES_PASSWORD=102030 -d -p 5432:5432 postgres
+docker run --name ecommerce -e POSTGRES_PASSWORD=12345678 -d -p 5432:5432 postgres
 
-podman run --name ecommerce -e POSTGRES_PASSWORD=102030 -d -p 5432:5432 postgres
+podman run --name ecommerce -e POSTGRES_PASSWORD=12345678 -d -p 5432:5432 postgres
 ```

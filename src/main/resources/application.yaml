@@ -2,5 +2,14 @@ spring:
     application:
         name: Ecommerce
     banner.location: static/banner.txt
-    data.mongodb:
-        uri: mongodb://localhost:27017/ecommerce
+    datasource:
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+        password: 12345678
+    jpa:
+        properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: update
+            show-sql: true
+
+api.security.token.secret: ${JWT_SECRET:batman batman batman}
