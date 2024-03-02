@@ -74,6 +74,10 @@ public class UserController {
         return new ResponseEntity<>(existingItemOptional, HttpStatus.OK);
     }
 
+    @Operation(summary = "Login", description = "Method to log in a User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = UserResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)),
+    })
     @PostMapping("/login")
     public ResponseEntity<UserResponse> login(@RequestBody @Valid UserAuthRequest data) {
         UserResponse userResponse = service.login(data);
@@ -81,6 +85,10 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
+    @Operation(summary = "Register", description = "Method to register a new User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
+    })
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserRequest userRequest) {
         service.registerUser(userRequest);

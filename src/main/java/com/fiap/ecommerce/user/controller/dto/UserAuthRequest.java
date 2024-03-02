@@ -1,4 +1,18 @@
 package com.fiap.ecommerce.user.controller.dto;
 
-public record UserAuthRequest(String login, String password) {
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+@Schema(title = "UserAuthRequest", description = "Object that represents a user authentication request")
+public record UserAuthRequest(
+    @NotBlank(message = "login is mandatory")
+    @Size(min = 2, max = 50, message = "size must be between {min} and {max}")
+    @Schema(description = "login to identify the user", example = "ecommerce@fiap.com")
+    String login,
+
+    @NotBlank(message = "password is mandatory")
+    @Size(min = 8, max = 20, message = "size must be between {min} and {max}")
+    @Schema(description = "password to authenticate the user", example = "12345678")
+    String password) {
 }
