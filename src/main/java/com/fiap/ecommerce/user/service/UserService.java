@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fiap.ecommerce.exception.AlreadyExistsException;
 import com.fiap.ecommerce.exception.NotFoundException;
 import com.fiap.ecommerce.security.TokenService;
 import com.fiap.ecommerce.user.controller.dto.UserAuthRequest;
@@ -43,10 +44,10 @@ public class UserService {
 
     public void registerUser(@Valid UserRequest userRequest) {
         if (repository.findByLogin(userRequest.login()) != null)
-            throw new NotFoundException("Login or Password is invalid.");
+            throw new AlreadyExistsException("Login already exists");
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(userRequest.password());
-        User newUser = new User(userRequest.login(), encryptedPassword, userRequest.role());
+        User newUser = new User(userRequest, encryptedPassword);
 
         repository.save(newUser);
     }

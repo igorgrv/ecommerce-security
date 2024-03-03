@@ -13,6 +13,11 @@ public record UserRequest(
     @Size(min = 2, max = 50, message = "size must be between {min} and {max}")
     @Schema(description = "login to identify the user", example = "ecommerce@fiap.com")
     String login,
+
+    @NotBlank(message = "fullName is mandatory")
+    @Size(min = 4, max = 50, message = "size must be between {min} and {max}")
+    @Schema(description = "fullName to identify the user", example = "José Fulano")
+    String fullName,
     
     @NotBlank(message = "password is mandatory")
     @Size(min = 8, max = 20, message = "size must be between {min} and {max}")

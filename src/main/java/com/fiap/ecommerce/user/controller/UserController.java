@@ -86,14 +86,10 @@ public class UserController {
     }
 
     @Operation(summary = "Register", description = "Method to register a new User")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
-    })
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserRequest userRequest) {
         service.registerUser(userRequest);
-
-        return ResponseEntity.ok("User registered with success");
+        return new ResponseEntity<>("User registered with success", HttpStatus.OK);
     }
 
     // @Operation(summary = "Update a User", description = "Method to update an

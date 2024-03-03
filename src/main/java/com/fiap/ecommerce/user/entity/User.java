@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fiap.ecommerce.user.controller.dto.UserRequest;
 import com.fiap.ecommerce.user.entity.enums.UserRole;
 
 import jakarta.persistence.Entity;
@@ -35,10 +36,11 @@ public class User implements UserDetails {
     private String password;
     private UserRole role;
 
-    public User(String login, String password, UserRole role) {
-        this.login = login;
+    public User(UserRequest userRequest, String password) {
+        this.login = userRequest.login();
+        this.role = userRequest.role();
+        this.fullName = userRequest.fullName();
         this.password = password;
-        this.role = role;
     }
 
     @Override
