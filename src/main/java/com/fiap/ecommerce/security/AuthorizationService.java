@@ -1,4 +1,4 @@
-package com.fiap.ecommerce.user.service;
+package com.fiap.ecommerce.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
