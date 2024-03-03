@@ -19,7 +19,6 @@ public record UserRequest(
     @Schema(description = "password to authenticate the user", example = "12345678")
     String password,
     
-    @NotBlank(message = "role is mandatory")
-    @Schema(description = "role to authorize the user", example = "admin")
+    @Schema(description = "role to authorize the user", example = "ADMIN")
     UserRole role) {
 }
