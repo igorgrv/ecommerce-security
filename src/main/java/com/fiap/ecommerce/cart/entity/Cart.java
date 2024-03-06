@@ -1,5 +1,7 @@
 package com.fiap.ecommerce.cart.entity;
 
+import com.fiap.ecommerce.item.entity.Item;
+import com.fiap.ecommerce.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +23,17 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @OneToOne
+    private User userId;
+
     @OneToMany
-    private List<CartItem> cartItemList;
+    private List<Item> cartItemList;
 
     private BigDecimal totalPrice;
+
+    public void addItem(Item item) {
+        cartItemList.add(item);
+        totalPrice = totalPrice.add(item.getPrice());
+    }
 
 }
