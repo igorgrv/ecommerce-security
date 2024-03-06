@@ -23,6 +23,6 @@ public class CartService {
         User user = userService.findById(addRequest.userId());
         Cart cart = user.getCart();
         cart.addItem(addRequest.item());
-//        userService.save(user);
+        userService.save(user);
     }
 }
