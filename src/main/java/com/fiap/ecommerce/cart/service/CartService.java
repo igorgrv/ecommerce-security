@@ -2,6 +2,7 @@ package com.fiap.ecommerce.cart.service;
 
 import com.fiap.ecommerce.cart.controller.dto.AddRequest;
 import com.fiap.ecommerce.cart.controller.dto.CartResponse;
+import com.fiap.ecommerce.cart.controller.dto.RemoveRequest;
 import com.fiap.ecommerce.cart.entity.Cart;
 import com.fiap.ecommerce.user.entity.User;
 import com.fiap.ecommerce.user.service.UserService;
@@ -23,6 +24,13 @@ public class CartService {
         User user = userService.findById(addRequest.userId());
         Cart cart = user.getCart();
         cart.addItem(addRequest.item());
+        userService.save(user);
+    }
+
+    public void deleteItemFromCart(RemoveRequest removeRequest) {
+        User user = userService.findById(removeRequest.userId());
+        Cart cart = user.getCart();
+        cart.removeItem(removeRequest.item());
         userService.save(user);
     }
 }

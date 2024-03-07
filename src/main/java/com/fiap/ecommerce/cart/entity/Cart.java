@@ -29,11 +29,20 @@ public class Cart {
     @OneToMany
     private List<Item> cartItemList;
 
+    private Integer quantity;
+
     private BigDecimal totalPrice;
 
     public void addItem(Item item) {
         cartItemList.add(item);
         totalPrice = totalPrice.add(item.getPrice());
+        quantity++;
+    }
+
+    public void removeItem(Item item) {
+        cartItemList.remove(item);
+        totalPrice = totalPrice.subtract(item.getPrice());
+        quantity--;
     }
 
 }
