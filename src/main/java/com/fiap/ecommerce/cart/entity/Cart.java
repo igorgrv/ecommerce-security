@@ -24,7 +24,9 @@ public class Cart {
     private String id;
 
     @OneToOne
-    private User userId;
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany
     private List<Item> cartItemList;
