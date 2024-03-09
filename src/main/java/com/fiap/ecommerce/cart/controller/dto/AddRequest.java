@@ -11,7 +11,7 @@ public record AddRequest(
     @Schema(description = "userId to identify the user", example = "11111")
     String userId,
 
-    @NotBlank(message = "item is mandatory")
+
     @Schema(description = "item to add", example = "Item")
     Item item){
 
