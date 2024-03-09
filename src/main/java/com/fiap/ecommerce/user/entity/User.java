@@ -36,18 +36,18 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Cart cart;
+    private Cart cart = new Cart();
 
     public User(UserRequest userRequest, String password) {
         this.login = userRequest.login();
         this.role = userRequest.role();
         this.fullName = userRequest.fullName();
         this.password = password;
-//        this.cart = new Cart();
-//        this.cart.setCartItemList(List.of());
-//        this.cart.setQuantity(0);
-//        this.cart.setTotalPrice(BigDecimal.ZERO);
-//        this.cart.setUser(this);
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+        cart.setUser(this);
     }
 
     @Override

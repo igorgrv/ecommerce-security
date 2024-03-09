@@ -1,7 +1,10 @@
 package com.fiap.ecommerce.user.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fiap.ecommerce.cart.entity.Cart;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,6 +51,12 @@ public class UserService {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(userRequest.password());
         User newUser = new User(userRequest, encryptedPassword);
+        Cart cart = new Cart();
+        cart.setUser(newUser);
+        cart.setQuantity(0);
+        cart.setTotalPrice(BigDecimal.ZERO);
+        cart.setCartItemList(new ArrayList<>());
+        newUser.setCart(cart);
 
         repository.save(newUser);
     }

@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,8 +29,8 @@ public class Cart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    private List<Item> cartItemList;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<Item> cartItemList = new ArrayList<>();
 
     private Integer quantity;
 
@@ -45,6 +46,10 @@ public class Cart {
         cartItemList.remove(item);
         totalPrice = totalPrice.subtract(item.getPrice());
         quantity--;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

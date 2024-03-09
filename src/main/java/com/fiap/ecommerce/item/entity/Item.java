@@ -2,13 +2,10 @@ package com.fiap.ecommerce.item.entity;
 
 import java.math.BigDecimal;
 
+import com.fiap.ecommerce.cart.entity.Cart;
 import com.fiap.ecommerce.item.controller.dto.ItemRequest;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,6 +24,10 @@ public class Item {
     private String id;
     private String name;
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 
     public Item(ItemRequest itemRequest) {
         this.name = itemRequest.name();
