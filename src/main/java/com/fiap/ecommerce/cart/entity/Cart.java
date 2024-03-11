@@ -24,9 +24,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "cart")
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
@@ -50,6 +48,13 @@ public class Cart {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Cart(User user) {
+        this.setUser(user);
+        this.setQuantity(0);
+        this.setTotalPrice(BigDecimal.ZERO);
+        this.setCartItemList(List.of());
     }
 
 }

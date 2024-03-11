@@ -4,6 +4,7 @@ import com.fiap.ecommerce.cart.controller.dto.AddRequest;
 import com.fiap.ecommerce.cart.controller.dto.CartResponse;
 import com.fiap.ecommerce.cart.controller.dto.RemoveRequest;
 import com.fiap.ecommerce.cart.entity.Cart;
+import com.fiap.ecommerce.cart.repository.CartRepository;
 import com.fiap.ecommerce.user.entity.User;
 import com.fiap.ecommerce.user.service.UserService;
 import lombok.RequiredArgsConstructor;

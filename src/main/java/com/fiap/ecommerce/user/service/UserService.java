@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fiap.ecommerce.cart.entity.Cart;
+import com.fiap.ecommerce.cart.repository.CartRepository;
+import com.fiap.ecommerce.cart.service.CartService;
+import com.fiap.ecommerce.item.entity.Item;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository repository;
+    private final CartRepository cartRepository;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
@@ -51,13 +55,10 @@ public class UserService {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(userRequest.password());
         User newUser = new User(userRequest, encryptedPassword);
-        Cart cart = new Cart();
-        cart.setUser(newUser);
-        cart.setQuantity(0);
-        cart.setTotalPrice(BigDecimal.ZERO);
-        cart.setCartItemList(new ArrayList<>());
+        Cart cart = new Cart(newUser);
         newUser.setCart(cart);
 
+//        cartRepository.save(cart);
         repository.save(newUser);
     }
 

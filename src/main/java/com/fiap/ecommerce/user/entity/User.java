@@ -34,9 +34,9 @@ public class User implements UserDetails {
     private String password;
     private UserRole role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Cart cart = new Cart();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 
     public User(UserRequest userRequest, String password) {
         this.login = userRequest.login();
