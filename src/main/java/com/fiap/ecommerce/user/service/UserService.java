@@ -1,25 +1,21 @@
 package com.fiap.ecommerce.user.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fiap.ecommerce.cart.entity.Cart;
-import com.fiap.ecommerce.cart.repository.CartRepository;
-import com.fiap.ecommerce.cart.service.CartService;
-import com.fiap.ecommerce.item.entity.Item;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fiap.ecommerce.cart.entity.Cart;
+import com.fiap.ecommerce.cart.repository.CartRepository;
 import com.fiap.ecommerce.exception.AlreadyExistsException;
 import com.fiap.ecommerce.exception.NotFoundException;
 import com.fiap.ecommerce.security.TokenService;
 import com.fiap.ecommerce.user.controller.dto.UserAuthRequest;
 import com.fiap.ecommerce.user.controller.dto.UserRequest;
-import com.fiap.ecommerce.user.controller.dto.UserResponse;
+import com.fiap.ecommerce.user.controller.dto.UserTokenResponse;
 import com.fiap.ecommerce.user.entity.User;
 import com.fiap.ecommerce.user.repository.UserRepository;
 
@@ -62,12 +58,12 @@ public class UserService {
         repository.save(newUser);
     }
 
-    public UserResponse login(UserAuthRequest data) {
+    public UserTokenResponse login(UserAuthRequest data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
-        return new UserResponse(token);
+        return new UserTokenResponse(token);
     }
 
     // public User update(String id, UserDto user) {

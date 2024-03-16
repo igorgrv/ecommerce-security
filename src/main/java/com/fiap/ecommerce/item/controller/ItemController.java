@@ -1,6 +1,5 @@
 package com.fiap.ecommerce.item.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -9,9 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fiap.ecommerce.item.controller.dto.ItemRequest;
+import com.fiap.ecommerce.item.controller.dto.ItemResponse;
 import com.fiap.ecommerce.item.entity.Item;
 import com.fiap.ecommerce.item.service.ItemService;
 
@@ -23,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -46,12 +50,11 @@ public class ItemController {
 
     @Operation(summary = "Get all the Items", description = "Method for getting all the Items")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "SUCCESS - List of all Items", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Item.class)), mediaType = MediaType.APPLICATION_JSON_VALUE))
+            @ApiResponse(responseCode = "200", description = "SUCCESS - List of all Items", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ItemResponse.class)), mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping
-    public ResponseEntity<List<Item>> getAll() {
-        List<Item> items = new ArrayList<>();
-        service.findAll().forEach(items::add);
+    public ResponseEntity<List<ItemResponse>> getAll() {
+        List<ItemResponse> items = service.findAll();
         if (items.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -66,6 +69,16 @@ public class ItemController {
     public ResponseEntity<Item> getById(@PathVariable("id") String itemId) {
         Item existingItemOptional = service.findById(itemId);
         return new ResponseEntity<>(existingItemOptional, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Save an item", description = "Method to save an item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = Item.class), mediaType = MediaType.APPLICATION_JSON_VALUE)),
+    })
+    @PostMapping
+    public ResponseEntity<Item> register(@RequestBody @Valid ItemRequest request) {
+        Item item = service.registerItem(request);
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a Item", description = "Method to Delete an existing Item")

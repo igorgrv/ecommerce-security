@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fiap.ecommerce.user.controller.dto.UserAuthRequest;
 import com.fiap.ecommerce.user.controller.dto.UserRequest;
 import com.fiap.ecommerce.user.controller.dto.UserResponse;
+import com.fiap.ecommerce.user.controller.dto.UserTokenResponse;
 import com.fiap.ecommerce.user.entity.User;
 import com.fiap.ecommerce.user.service.UserService;
 
@@ -52,16 +53,16 @@ public class UserController {
 
     @Operation(summary = "Get all the Users", description = "Method for getting all the Users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "SUCCESS - List of all Users", content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class)), mediaType = MediaType.APPLICATION_JSON_VALUE))
+            @ApiResponse(responseCode = "200", description = "SUCCESS - List of all Users", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserResponse.class)), mediaType = MediaType.APPLICATION_JSON_VALUE))
     })
     @GetMapping
-    public ResponseEntity<List<User>> getAll() {
-        List<User> items = new ArrayList<>();
-        service.findAll().forEach(items::add);
-        if (items.isEmpty())
+    public ResponseEntity<List<UserResponse>> getAll() {
+        List<UserResponse> users = new ArrayList<>();
+        service.findAll().forEach(user -> users.add(UserResponse.fromEntity(user)));
+        if (users.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<>(items, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @Operation(summary = "Get a User by ID", description = "Method to get a User based on the ID")
@@ -76,11 +77,11 @@ public class UserController {
 
     @Operation(summary = "Login", description = "Method to log in a User")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = UserResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)),
+            @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = UserTokenResponse.class), mediaType = MediaType.APPLICATION_JSON_VALUE)),
     })
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody @Valid UserAuthRequest data) {
-        UserResponse userResponse = service.login(data);
+    public ResponseEntity<UserTokenResponse> login(@RequestBody @Valid UserAuthRequest data) {
+        UserTokenResponse userResponse = service.login(data);
 
         return ResponseEntity.ok(userResponse);
     }
@@ -91,20 +92,6 @@ public class UserController {
         service.registerUser(userRequest);
         return new ResponseEntity<>("User registered with success", HttpStatus.OK);
     }
-
-    // @Operation(summary = "Update a User", description = "Method to update an
-    // existing User")
-    // @ApiResponses(value = {
-    // @ApiResponse(responseCode = "200", description = "SUCCESS - User successfully
-    // updated", content = @Content(schema = @Schema(implementation = User.class),
-    // mediaType = MediaType.APPLICATION_JSON_VALUE)),
-    // })
-    // @PutMapping("{id}")
-    // public ResponseEntity<User> update(@PathVariable("id") String id, @Valid
-    // @RequestBody UserDto user) {
-    // User updatedUser = service.update(id, user);
-    // return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-    // }
 
     @Operation(summary = "Delete a User", description = "Method to Delete an existing User")
     @DeleteMapping("{id}")

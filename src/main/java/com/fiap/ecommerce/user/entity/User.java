@@ -1,18 +1,24 @@
 package com.fiap.ecommerce.user.entity;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
-import com.fiap.ecommerce.cart.entity.Cart;
-import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fiap.ecommerce.cart.entity.Cart;
 import com.fiap.ecommerce.user.controller.dto.UserRequest;
 import com.fiap.ecommerce.user.entity.enums.UserRole;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
