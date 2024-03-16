@@ -41,7 +41,6 @@ Welcome to **Ecommerce **! An innovative project that combines the powerful tech
 ## Challenges
 
 * Work with Spring Security;
-* Work with NoSQL databases;
 
 ## Working with Postgres
 
