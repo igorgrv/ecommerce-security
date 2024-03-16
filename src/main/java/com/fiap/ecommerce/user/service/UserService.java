@@ -66,12 +66,6 @@ public class UserService {
         return new UserTokenResponse(token);
     }
 
-    // public User update(String id, UserDto user) {
-    // User oldUser = findById(id);
-    // User updatedUser = user.getUserUpdated(oldUser);
-    // return repository.save(updatedUser);
-    // }
-
     public void delete(String id) {
         findById(id);
         repository.deleteById(id);

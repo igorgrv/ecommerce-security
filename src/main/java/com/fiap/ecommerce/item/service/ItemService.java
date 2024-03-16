@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.fiap.ecommerce.cart.entity.Cart;
 import com.fiap.ecommerce.exception.AlreadyExistsException;
 import com.fiap.ecommerce.exception.NotFoundException;
 import com.fiap.ecommerce.item.controller.dto.ItemRequest;
@@ -45,6 +46,11 @@ public class ItemService {
             throw new AlreadyExistsException("Item already registered");
 
         return repository.save(new Item(request));
+    }
+
+    public void addCartToItem(Cart cart, Item item) {
+        item.addCart(cart);
+        repository.save(item);
     }
 
 }
