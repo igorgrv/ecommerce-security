@@ -89,4 +89,8 @@ public class User implements UserDetails {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
+    public void cleanCart(User user) {
+        this.cart = new Cart(user);
+    }
+
 }

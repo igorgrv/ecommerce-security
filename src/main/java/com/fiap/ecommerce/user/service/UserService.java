@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fiap.ecommerce.cart.entity.Cart;
-import com.fiap.ecommerce.cart.repository.CartRepository;
 import com.fiap.ecommerce.exception.AlreadyExistsException;
 import com.fiap.ecommerce.exception.NotFoundException;
 import com.fiap.ecommerce.security.TokenService;
@@ -27,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository repository;
-    private final CartRepository cartRepository;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
@@ -53,8 +51,6 @@ public class UserService {
         User newUser = new User(userRequest, encryptedPassword);
         Cart cart = new Cart(newUser);
         newUser.setCart(cart);
-
-//        cartRepository.save(cart);
         repository.save(newUser);
     }
 
@@ -72,6 +68,11 @@ public class UserService {
     }
 
     public void save(User user) {
+        repository.save(user);
+    }
+
+    public void cleanCart(User user) {
+        user.cleanCart(user);
         repository.save(user);
     }
 }
